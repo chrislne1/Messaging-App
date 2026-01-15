@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+---
+
+Database (Neon): [https://console.neon.tech/app/projects/misty-boat-16107562?branchId=br-polished-union-ah8gfcii&database=neondb]
+
+PostgreSQL Commands: [https://neon.com/postgresql/tutorial]
+
+Prisma Commands: [https://www.prisma.io/docs/orm/prisma-schema/overview#field-definitions-are-aligned-into-columns-separated-by-2-or-more-spaces]
+
+Express Commands: [https://expressjs.com/en/5x/api.html]
