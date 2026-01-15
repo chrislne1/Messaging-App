@@ -1,4 +1,4 @@
-# Messaging App (Facebook-Inspired)
+# Messaging App
 
 This project is a full-stack messaging application inspired by core features of Facebook Messenger.  
 It is being developed as a learning-focused project to understand how modern web applications handle user management, APIs, and real-time-style communication using a clean client–server architecture.
