@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.post("/users", async (req, res) => {
+app.post("/create-user", async (req, res) => {
     //Store requested data values in object
     const {username, email, password} = req.body;
     //Create new user with requested data
@@ -24,6 +24,61 @@ app.post("/users", async (req, res) => {
 
     //Respond with new User to server
     res.json(user);
+});
+
+app.get("/get/user/all", async (req, res) => {
+  //
+  try{
+    const users = prisma.user.findMany();
+    res.json(users);
+  }
+  catch(err){
+    res.status(500).json({error: "Unable to grab user"});
+  }
+});
+
+app.get("get/user/:id", async (req, res) =>{
+  const userId = Number(req.params.id);
+  try{
+    //Search for user via id
+    const user = prisma.user.findUnique({
+      where: { id: userId}
+    });
+
+    //If no user found prompt error
+    if(!user){
+      res.status(404).json({error: "User cannot be found"});
+    }
+
+    //Return user
+    res.json(user);
+  }
+
+  catch(err){
+    res.status(500).json({error: "Unable to grab user"});
+  }
+});
+
+app.get("get/user/:username", async (req, res) => {
+  const username = String(req.params.username);
+  try{
+    //search for user by username nd store id and username
+    const user = prisma.user.findUnique({
+      where: { username: username},
+      select: { id: true,
+                username: true
+      }
+    });
+
+    if(!user){
+      res.status(404).json({error: "User cannot be found"})
+    }
+
+    res.json(user);
+  }
+  catch(err){
+        res.status(500).json({error: "Unable to grab user"});
+  }
 });
 
 const PORT = process.env.PORT || 4000;
