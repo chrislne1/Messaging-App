@@ -6,3 +6,13 @@ export const createUser = async (data) => {
     });
     return res.json()
 };
+
+//Method to grab all users
+export function getAllUsers(){
+    return fetch("/get/user/all").then(res => res.json());
+}
+
+//Method to grab a user by id
+export function getUserById(id){
+    return fetch(`/get/user/${id}`).then(res => res.json());
+}
