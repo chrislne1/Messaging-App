@@ -9,6 +9,7 @@
   --border: rgba(148, 163, 184, 0.16);
   --accent: #3b82f6;
   --accent-soft: rgba(59, 130, 246, 0.16);
+  --activity: #2cff09;
 }
 
 * {
@@ -95,11 +96,54 @@ input {
 
 .search-box input {
   width: 100%;
-  padding: clamp(12px, 1.4vw, 16px) clamp(14px, 1.5vw, 18px);
+  padding: clamp(8px, 1vw, 12px) clamp(12px, 1.2vw, 14px);
   border-radius: clamp(14px, 1.5vw, 18px);
   border: 1px solid var(--border);
   background: var(--panel-soft);
   color: var(--text);
+}
+
+.search-results {
+  margin: 8px 0 0;
+  padding: 8px 0;
+  list-style: none;
+  max-height: 40vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(15,23,42,0.95), rgba(10,14,20,0.98));
+  border: 1px solid var(--border);
+}
+
+.search-result {
+  display: flex;
+  gap: 12px;
+  padding: 8px 12px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background: var(--panel-soft);
+}
+
+.search-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.search-info strong {
+  display: block;
+}
+
+.search-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .chat-list {
@@ -113,10 +157,10 @@ input {
 
 .chat-item {
   display: grid;
-  grid-template-columns: clamp(40px, 4vw, 48px) 1fr auto;
-  gap: clamp(10px, 1.2vw, 14px);
+  grid-template-columns: clamp(36px, 4vw, 44px) 1fr auto;
+  gap: clamp(8px, 1vw, 12px);
   align-items: center;
-  padding: clamp(12px, 1.5vw, 16px);
+  padding: clamp(8px, 1vw, 12px);
   border-radius: clamp(14px, 1.5vw, 18px);
   background: transparent;
   border: 1px solid transparent;
@@ -139,7 +183,25 @@ input {
   color: var(--accent);
   font-weight: 700;
   font-size: clamp(1rem, 1.6vw, 1.2rem);
+  position: relative;
 }
+
+/* small status indicator dot shown on avatars */
+.status-dot {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: clamp(10px, 1.4vw, 12px);
+  height: clamp(10px, 1.4vw, 12px);
+  border-radius: 50%;
+  border: 2px solid var(--panel);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+}
+
+/* status colors: active=green, online=white, away=muted */
+.status-dot.active { background: #2cff09; }
+.status-dot.online { background: #ffffff; }
+.status-dot.away { background: var(--muted); }
 
 .chat-info {
   min-width: 0;
@@ -207,22 +269,37 @@ input {
 }
 
 .chat-status {
-  color: var(--accent);
   font-weight: 600;
 }
+
+/* header status color variants */
+.chat-status.active { color: #2cff09; }
+.chat-status.online { color: #ffffff; }
+.chat-status.away { color: var(--muted); }
 
 .message-area {
   flex: 1;
   overflow-y: auto;
-  padding: clamp(18px, 2vw, 28px);
+  padding: clamp(12px, 1.5vw, 18px);
   display: flex;
   flex-direction: column;
-  gap: clamp(12px, 1.5vw, 20px);
+  gap: clamp(8px, 1.2vw, 14px);
   background: linear-gradient(180deg, rgba(15,23,42,0.95), rgba(8,16,27,1));
+  align-items: center;
+  justify-content: center;
 }
 
 .message-row {
   display: flex;
+  align-self: flex-start;
+  width: 100%;
+}
+
+.message-placeholder {
+  text-align: center;
+  color: var(--muted);
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  opacity: 0.7;
 }
 
 .message-sent {
@@ -235,14 +312,21 @@ input {
 
 .message-bubble {
   max-width: min(68%, 520px);
-  padding: clamp(14px, 1.8vw, 20px);
-  border-radius: clamp(16px, 2vw, 24px);
+  padding: clamp(4px, 0.4vw, 7px);
+  border-radius: clamp(8px, 1vw, 12px);
   background: var(--panel-strong);
   color: var(--text);
   border: 1px solid var(--border);
   display: inline-flex;
   flex-direction: column;
-  gap: clamp(6px, 1vw, 10px);
+  gap: clamp(2px, 0.3vw, 3px);
+}
+
+.message-bubble p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.13;
+  font-size: clamp(0.92rem, 1vw, 1rem);
 }
 
 .message-sent .message-bubble {
@@ -262,17 +346,17 @@ input {
 .message-form {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 1.2vw, 14px);
-  padding: clamp(16px, 2vw, 24px);
+  gap: clamp(8px, 1vw, 12px);
+  padding: clamp(10px, 1.6vw, 14px);
   border-top: 1px solid var(--border);
   background: var(--panel);
 }
 
 .message-form input {
   flex: 1;
-  padding: clamp(12px, 1.5vw, 16px) clamp(14px, 1.6vw, 18px);
+  padding: clamp(8px, 1vw, 10px) clamp(10px, 1vw, 12px);
   border: 1px solid var(--border);
-  border-radius: clamp(16px, 1.5vw, 20px);
+  border-radius: clamp(12px, 1vw, 16px);
   background: transparent;
   color: var(--text);
 }
